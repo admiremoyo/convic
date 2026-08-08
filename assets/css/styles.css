@@ -232,6 +232,9 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .btn:active { transform: translateY(0); }
 .btn svg { width: 1.15em; height: 1.15em; flex: none; }
 
+/* Pink is the logo's secondary colour. It is deliberately not used for buttons:
+   at full-button size it overwhelms the blue and reads as a different brand.
+   Kept here in case a single pink call-to-action is ever wanted. */
 .btn--pink   { --btn-bg: var(--pink-500); --btn-bd: var(--pink-500); }
 .btn--pink:hover { --btn-bg: var(--pink-600); --btn-bd: var(--pink-600); }
 
@@ -556,7 +559,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   font-weight: 650;
   color: #dbe5fa;
 }
-.hero__badges svg { width: 1.1rem; height: 1.1rem; color: var(--pink-400); flex: none; }
+.hero__badges svg { width: 1.1rem; height: 1.1rem; color: #7fb3f5; flex: none; }
 
 /* Page hero (interior pages) */
 .page-hero {
@@ -574,7 +577,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   z-index: -1;
   background:
     radial-gradient(60rem 30rem at 80% -10%, rgba(36,86,189,.55), transparent 65%),
-    radial-gradient(40rem 24rem at 5% 110%, rgba(245,87,138,.28), transparent 70%);
+    radial-gradient(40rem 24rem at 5% 110%, rgba(36,86,189,.35), transparent 70%);
 }
 .page-hero h1 { color: #fff; max-width: 20ch; }
 .page-hero__lede { font-size: 1.1rem; color: #cbd7ec; max-width: 55ch; margin-bottom: 0; }
@@ -639,7 +642,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   left: 0; top: .55em;
   width: .45rem; height: .45rem;
   border-radius: 50%;
-  background: var(--pink-500);
+  background: var(--blue-500);
 }
 
 /* Numbered process steps */
@@ -658,7 +661,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .step h3 { font-size: 1.15rem; margin-bottom: .45rem; }
 .step p { font-size: .93rem; color: var(--muted); margin: 0; }
 .section--dark .step p { color: #93a4c4; }
-.section--dark .step__num { background: var(--pink-500); }
+.section--dark .step__num { background: var(--blue-500); }
 
 /* Stats */
 .stats {
@@ -702,9 +705,9 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   left: 0; top: .12em;
   width: 1.4rem; height: 1.4rem;
   border-radius: 50%;
-  background: var(--pink-50) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e03d70' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / .85rem no-repeat;
+  background: var(--blue-50) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2317429b' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / .85rem no-repeat;
 }
-.section--dark .checks li::before { background-color: rgba(245,87,138,.18); }
+.section--dark .checks li::before { background-color: rgba(36,86,189,.28); }
 .section--dark .checks li { color: #c6d2e8; }
 
 /* --------------------------------------------------------------------------
@@ -827,7 +830,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   right: -1rem; bottom: -1.5rem;
   max-width: 15rem;
   padding: 1.15rem 1.35rem;
-  background: var(--pink-500);
+  background: var(--blue-600);
   color: #fff;
   border-radius: var(--r-md);
   box-shadow: var(--shadow-lg);
@@ -903,7 +906,8 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(38rem 22rem at 88% 20%, rgba(245,87,138,.42), transparent 68%);
+  /* Pink over blue reads as purple, so this stays in the blue family. */
+  background: radial-gradient(38rem 22rem at 88% 20%, rgba(120,170,255,.28), transparent 68%);
 }
 .cta-band h2 { color: #fff; }
 .cta-band__inner {
@@ -924,7 +928,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   justify-content: center;
   gap: .5rem 1.25rem;
   padding: 1rem var(--gutter);
-  background: var(--pink-500);
+  background: var(--blue-600);
   color: #fff;
   text-align: center;
   font-weight: 650;
@@ -1089,7 +1093,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   left: .1rem; top: .62em;
   width: .5rem; height: .5rem;
   border-radius: 2px;
-  background: var(--pink-500);
+  background: var(--blue-500);
   transform: rotate(45deg);
 }
 

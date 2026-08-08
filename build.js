@@ -90,13 +90,13 @@ ${drops}
       <li><a class="nav__link" href="{{base}}contact/"${cur('contact')}>Contact</a></li>
 
       <li class="nav__mobile-cta">
-        <a class="btn btn--pink" href="{{base}}contact/">Request a free quote</a>
+        <a class="btn" href="{{base}}contact/">Request a free quote</a>
         <a class="btn btn--wa" href="${waHref}" rel="noopener">WhatsApp us</a>
       </li>
     </ul>
 
     <div class="nav__actions">
-      <a class="btn btn--pink btn--quote" href="{{base}}contact/">Get a free quote</a>
+      <a class="btn btn--quote" href="{{base}}contact/">Get a free quote</a>
       <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="primary-menu" aria-label="Open menu">
         <span></span>
       </button>
