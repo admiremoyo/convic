@@ -414,6 +414,7 @@ for (const file of files) {
 
   const tokens = {
     '{{base}}': base,
+    '{{domain}}': cfg.domain,
     '{{phone1}}': cfg.phonePrimary.display,
     '{{phone1e}}': cfg.phonePrimary.e164,
     '{{phone2}}': cfg.phoneSecondary.display,

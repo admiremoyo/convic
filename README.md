@@ -17,7 +17,11 @@ behaviour, run a local server:
 python3 -m http.server 8000    # then visit http://localhost:8000
 ```
 
-**To publish:** upload every file in this folder to your hosting. That's it.
+**To publish:** push to `main`. GitHub Actions deploys to Azure Static Web
+Apps automatically — no manual upload.
+
+Live at **https://kind-bush-0e71ca310.7.azurestaticapps.net** until the custom
+domain is connected.
 
 ---
 
@@ -26,11 +30,38 @@ python3 -m http.server 8000    # then visit http://localhost:8000
 | # | Task | Where |
 |---|---|---|
 | 1 | Add your logo and photos | See [`assets/img/README.md`](assets/img/README.md) — filenames are already wired up |
-| 2 | Confirm the domain | `site.config.json` → `domain`. Currently `https://www.covcro.co.zw` |
+| 2 | Point the domain at Azure | See "Custom domain" below. Site URL is set to `https://covcroelectrical.co.zw` |
 | 3 | Confirm opening hours | `site.config.json` → `hours` |
 | 4 | Connect the quote form | See "Making the form send email" below |
 | 5 | Set up Google Business Profile | See "Getting found on Google" below |
 | 6 | Re-run the build | `node build.js` after any change in `site.config.json` |
+
+---
+
+## Custom domain (covcroelectrical.co.zw)
+
+The site's canonical URL is already set to `https://covcroelectrical.co.zw`.
+To make that live:
+
+1. In the Azure portal, open your Static Web App → **Custom domains** → **Add**
+2. Add `www.covcroelectrical.co.zw` first — Azure gives you a **CNAME** target
+   like `kind-bush-0e71ca310.7.azurestaticapps.net`. Add that CNAME at your
+   `.co.zw` registrar.
+3. Then add the apex `covcroelectrical.co.zw`. Apex domains cannot use a plain
+   CNAME, so either:
+   - use your registrar's **ALIAS/ANAME** record pointing at the same target, or
+   - move DNS to **Azure DNS** and let Azure create the alias record for you.
+4. Azure issues the HTTPS certificate automatically once DNS resolves. This can
+   take up to a few hours to propagate.
+
+Pick one as primary and redirect the other, so Google does not treat
+`www.` and the apex as two competing copies of the same site. The canonical
+tags on every page already point at the apex.
+
+**If you choose `www.` as primary instead**, change `domain` in
+`site.config.json` to `https://www.covcroelectrical.co.zw` and run
+`node build.js` — that single value drives every canonical tag, the sitemap,
+robots.txt and all structured data.
 
 ---
 
@@ -114,7 +145,7 @@ none of them are code:
    actively hurts.
 4. **Submit the sitemap.** In
    [Google Search Console](https://search.google.com/search-console), add the
-   property and submit `https://www.covcro.co.zw/sitemap.xml`.
+   property and submit `https://covcroelectrical.co.zw/sitemap.xml`.
 
 ### Adding testimonials
 
