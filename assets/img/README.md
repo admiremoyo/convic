@@ -1,10 +1,12 @@
-# Images — what to drop in and where
+# Images
 
-The site already references every filename below. **Save your photos with these
-exact names in these exact folders and they appear automatically — no code
-changes needed.** Until a file exists, that slot shows a tidy branded
-placeholder rather than a broken image, so the site is safe to publish at any
-point.
+**All images are in place.** This file is the reference for replacing them or
+adding more later.
+
+The site references each photo by the exact filename below. To swap one, save
+the new photo over the old file using the same name — no code changes needed.
+If a file is ever missing, that slot shows a tidy branded placeholder rather
+than a broken image, so the site is always safe to publish.
 
 ---
 
@@ -47,21 +49,28 @@ These are the photos you sent. Save each one under the matching name:
 | `projects/slab-pour-team.jpg` | The team pouring concrete over the reinforced slab |
 | `projects/drip-irrigation-field.jpg` | The grey PVC manifold with red valves feeding the drip lines |
 | `projects/greenhouse-irrigation.jpg` | The greenhouse rows with drip lines down each bed |
+| `projects/inverter-battery-bank-2.jpg` | Second inverter/battery angle showing the labelled boards |
 
 ---
 
 ## Before you upload — please resize
 
-Photos straight off a phone are 4–8 MB each. That will make the site slow,
-which hurts both visitors on mobile data and your Google ranking.
+Photos straight off a phone or an image tool are several MB each. That makes
+the site slow, which hurts both visitors on mobile data and your Google
+ranking. The current set was reduced from ~32 MB to ~2.5 MB with no visible
+quality loss.
 
 **Aim for under 400 KB per photo.** Use any free tool —
 [squoosh.app](https://squoosh.app) works in the browser with nothing to install:
 
 1. Open the photo
-2. Set the width to **1600px** (or 1920px for the hero)
-3. Choose **MozJPEG**, quality around **75**
+2. Set the width to **1400px** for landscape, **1000px** for portrait
+   (**1920px** for the hero)
+3. Choose **MozJPEG**, quality around **78**
 4. Download and rename it to the filename above
+
+Save as `.jpg` for photographs. Keep `.png` only for the logo, which needs a
+transparent background.
 
 ---
 

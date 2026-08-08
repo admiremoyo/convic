@@ -193,7 +193,7 @@ ${services}
 
 function layout(page, body, schema) {
   const url = cfg.domain + page.canonical;
-  const ogImage = `${cfg.domain}/assets/img/${page.ogImage || 'og-cover.png'}`;
+  const ogImage = `${cfg.domain}/assets/img/${page.ogImage || 'og-cover.jpg'}`;
 
   const schemaBlock = schema
     ? `\n<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n</script>`
@@ -256,6 +256,58 @@ ${footer()}
 }
 
 /* -------------------------------------------------------------------------
+   Intrinsic image dimensions
+
+   Browsers need width/height on <img> to reserve space before the file
+   downloads — without it the page jumps as photos load. Reading the real
+   dimensions here means the attributes stay correct whenever a photo is
+   swapped, instead of drifting out of sync with hand-written numbers.
+   ------------------------------------------------------------------------- */
+
+function imageSize(file) {
+  let buf;
+  try { buf = fs.readFileSync(file); } catch { return null; }
+
+  // PNG: IHDR is always the first chunk.
+  if (buf.length > 24 && buf.readUInt32BE(0) === 0x89504e47) {
+    return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
+  }
+
+  // JPEG: walk the marker segments to the frame header.
+  if (buf.length > 4 && buf[0] === 0xff && buf[1] === 0xd8) {
+    let i = 2;
+    while (i < buf.length - 9) {
+      if (buf[i] !== 0xff) { i++; continue; }
+      const marker = buf[i + 1];
+      // SOF0-SOF15, excluding the non-frame markers DHT/JPG/DAC
+      if (marker >= 0xc0 && marker <= 0xcf &&
+          marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
+        return { height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7) };
+      }
+      i += 2 + buf.readUInt16BE(i + 2);
+    }
+  }
+  return null;
+}
+
+/** Rewrite width/height on every <img> whose file we can measure. */
+function fixImageDimensions(html, base) {
+  return html.replace(/<img\b[^>]*>/g, (tag) => {
+    const src = (tag.match(/\ssrc="([^"]+)"/) || [])[1];
+    if (!src || /^(https?:)?\/\//.test(src)) return tag;
+
+    const rel = src.startsWith(base) ? src.slice(base.length) : src;
+    const size = imageSize(path.join(ROOT, rel));
+    if (!size) return tag;
+
+    return tag
+      .replace(/\swidth="\d+"/, '')
+      .replace(/\sheight="\d+"/, '')
+      .replace(/\s*\/?>$/, ` width="${size.width}" height="${size.height}">`);
+  });
+}
+
+/* -------------------------------------------------------------------------
    Page assembly
    ------------------------------------------------------------------------- */
 
@@ -282,7 +334,7 @@ function businessNode() {
     alternateName: 'Covcro Electrical',
     url: `${cfg.domain}/`,
     logo: `${cfg.domain}/assets/img/brand/logo.png`,
-    image: `${cfg.domain}/assets/img/og-cover.png`,
+    image: `${cfg.domain}/assets/img/og-cover.jpg`,
     email: cfg.email,
     telephone: cfg.phonePrimary.e164,
     description: 'Electrical, solar, borehole, water reticulation and plumbing contractors based in Marlborough, Harare. Domestic, commercial and industrial installation and maintenance, including 11kV and medium-voltage lines.',
@@ -376,6 +428,7 @@ for (const file of files) {
   for (const [token, value] of Object.entries(tokens)) {
     html = html.split(token).join(value);
   }
+  html = fixImageDimensions(html, base);
 
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, html);
