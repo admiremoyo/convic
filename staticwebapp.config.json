@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json.schemastore.org/staticwebapp.config.json",
+
+  "trailingSlash": "always",
+
+  "responseOverrides": {
+    "404": {
+      "rewrite": "/404.html",
+      "statusCode": 404
+    }
+  },
+
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "geolocation=(), microphone=(), camera=()"
+  },
+
+  "routes": [
+    {
+      "route": "/assets/img/*",
+      "headers": { "cache-control": "public, max-age=2592000" }
+    },
+    {
+      "route": "/assets/css/*",
+      "headers": { "cache-control": "public, max-age=86400, must-revalidate" }
+    },
+    {
+      "route": "/assets/js/*",
+      "headers": { "cache-control": "public, max-age=86400, must-revalidate" }
+    },
+    {
+      "route": "/sitemap.xml",
+      "headers": { "cache-control": "public, max-age=3600" }
+    },
+    {
+      "route": "/robots.txt",
+      "headers": { "cache-control": "public, max-age=3600" }
+    }
+  ],
+
+  "mimeTypes": {
+    ".webmanifest": "application/manifest+json",
+    ".svg": "image/svg+xml",
+    ".json": "application/json",
+    ".xml": "application/xml",
+    ".webp": "image/webp",
+    ".avif": "image/avif"
+  }
+}
