@@ -91,7 +91,9 @@ h1, h2, h3, h4, h5 {
   text-wrap: balance;
 }
 
-h1 { font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4rem); }
+/* Headings are descriptive rather than short slogans, so they are set a little
+   smaller than a display headline would be to keep line counts sane. */
+h1 { font-size: clamp(2rem, 1.3rem + 2.9vw, 3.4rem); }
 h2 { font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem); }
 h3 { font-size: clamp(1.25rem, 1.1rem + .7vw, 1.55rem); }
 h4 { font-size: 1.075rem; letter-spacing: -.01em; }

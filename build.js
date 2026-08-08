@@ -69,7 +69,7 @@ function header(nav) {
 
   return `<header class="site-header">
   <div class="wrap nav">
-    <a class="brand" href="{{base}}" aria-label="${cfg.name} — home">
+    <a class="brand" href="{{base}}" aria-label="${cfg.name} home">
       <img src="{{base}}assets/img/brand/logo.png" alt="${cfg.name}" width="320" height="160">
       <span class="brand__fallback" hidden aria-hidden="true">
         <span class="brand__name">${cfg.shortName}</span>
@@ -109,8 +109,8 @@ function ctaBand() {
   return `<section class="cta-band">
   <div class="wrap cta-band__inner">
     <div class="cta-band__copy">
-      <h2>Tell us what you need. We will tell you what it takes.</h2>
-      <p>Free site assessments across Harare. Itemised quotes, no obligation.</p>
+      <h2>Get a Free Quote</h2>
+      <p>Call ${cfg.phonePrimary.display} or send us a message. Free site visits across Harare.</p>
     </div>
     <div class="btn-row">
       <a class="btn btn--white btn--lg" href="{{base}}contact/">Request a quote</a>
