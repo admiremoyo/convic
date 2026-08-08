@@ -1,0 +1,25 @@
+{
+  "name": "Covcro Electrical & Plumbing (Pvt) Ltd",
+  "shortName": "Covcro",
+  "domain": "https://www.covcro.co.zw",
+  "email": "covcroelectrical@gmail.com",
+  "phonePrimary": { "display": "077 227 5744", "e164": "+263772275744" },
+  "phoneSecondary": { "display": "071 927 5744", "e164": "+263719275744" },
+  "whatsapp": "263772275744",
+  "address": {
+    "street": "No. 20 Lower Hampden Place, Marlborough",
+    "city": "Harare",
+    "region": "Harare Province",
+    "country": "ZW",
+    "countryName": "Zimbabwe"
+  },
+  "hours": {
+    "weekdays": "Mon–Fri 8am–5pm",
+    "saturday": "Sat 8am–1pm"
+  },
+  "social": {
+    "facebook": "",
+    "instagram": "",
+    "linkedin": ""
+  }
+}

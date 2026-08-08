@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Covcro">
+  <rect width="64" height="64" rx="14" fill="#17429b"/>
+  <!-- bulb outline -->
+  <path d="M32 12c-7.7 0-14 6.1-14 13.6 0 4.8 2.5 8.4 4.7 11 1 1.2 1.6 2.6 1.6 4.1v1.1h15.4v-1.1c0-1.5.6-2.9 1.6-4.1 2.2-2.6 4.7-6.2 4.7-11C46 18.1 39.7 12 32 12z" fill="#ffffff"/>
+  <!-- split fill: pink left, blue right -->
+  <path d="M32 12c-7.7 0-14 6.1-14 13.6 0 4.8 2.5 8.4 4.7 11 1 1.2 1.6 2.6 1.6 4.1v1.1H32z" fill="#f5578a"/>
+  <!-- lightning bolt -->
+  <path d="M34.4 18.5 25.6 30h5.2l-1.6 9.5L38 27.8h-5.3z" fill="#17429b"/>
+  <!-- base -->
+  <rect x="26" y="44" width="12" height="3.4" rx="1.7" fill="#ffffff"/>
+  <rect x="27.6" y="49" width="8.8" height="3.4" rx="1.7" fill="#ffffff"/>
+</svg>
