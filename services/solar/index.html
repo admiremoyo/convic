@@ -4,6 +4,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- Inlined ahead of the stylesheet so the homepage hero never paints
+     raw HTML on a slow connection: solid background instead of a white
+     gap, the decorative word list left unrendered instead of flashing as
+     plain unstyled text, the scroll cue sized instead of showing at its
+     un-set intrinsic SVG size. Values are literal, since the custom
+     properties in styles.css are not defined yet at this point. Belongs
+     to .hero-slides on the homepage only; harmless no-op elsewhere. -->
+<style>
+.hero-slides{position:relative;display:grid;place-items:center;min-height:70vh;overflow:hidden;background:#071634}
+.hero-slides__heading{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hero-slides__word{display:none}
+.hero-slides__slide{position:absolute;inset:0;opacity:0}
+.hero-slides__scroll{position:absolute;z-index:2;bottom:2rem;left:50%;transform:translateX(-50%);width:2.75rem;height:2.75rem}
+.hero-slides__scroll svg{width:1.1rem;height:1.1rem}
+</style>
+
 <title>Solar Installation Harare | Inverters &amp; Batteries | Covcro</title>
 <meta name="description" content="Solar installers in Harare. On-grid, hybrid and off-grid systems with inverters, lithium batteries and protection kits. Free assessment: 077 227 5744.">
 <link rel="canonical" href="https://covcroelectrical.co.zw/services/solar/">
@@ -31,7 +47,7 @@
 <link rel="apple-touch-icon" href="../../assets/img/brand/apple-touch-icon.png">
 <link rel="manifest" href="../../site.webmanifest">
 <link rel="preload" href="../../assets/fonts/roboto-latin-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="../../assets/css/styles.css">
+<link rel="stylesheet" href="../../assets/css/styles.css?v=5f71ee749f">
 <script>document.documentElement.className+=" js";</script>
 <script type="application/ld+json">
 {
@@ -538,6 +554,6 @@
   <span>WhatsApp us</span>
 </a>
 
-<script src="../../assets/js/main.js" defer></script>
+<script src="../../assets/js/main.js?v=5f71ee749f" defer></script>
 </body>
 </html>

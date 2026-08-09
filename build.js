@@ -18,9 +18,24 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const ROOT = __dirname;
 const cfg = JSON.parse(fs.readFileSync(path.join(ROOT, 'site.config.json'), 'utf8'));
+
+/* CSS and JS are served with a 24-hour cache (staticwebapp.config.json),
+   but their filenames never change between deploys, so a returning
+   visitor's browser will keep serving yesterday's copy against today's
+   fresh HTML for up to a day — exactly the mismatch that made the hero
+   render broken on a phone that had visited before this file changed.
+   A content hash on the query string busts that cache on every deploy
+   that actually changes the file, while still letting unrelated deploys
+   keep the long cache. */
+const ASSET_VER = crypto.createHash('sha256')
+  .update(fs.readFileSync(path.join(ROOT, 'assets', 'css', 'styles.css')))
+  .update(fs.readFileSync(path.join(ROOT, 'assets', 'js', 'main.js')))
+  .digest('hex')
+  .slice(0, 10);
 
 /* -------------------------------------------------------------------------
    Shared markup
@@ -205,6 +220,22 @@ function layout(page, body, schema) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- Inlined ahead of the stylesheet so the homepage hero never paints
+     raw HTML on a slow connection: solid background instead of a white
+     gap, the decorative word list left unrendered instead of flashing as
+     plain unstyled text, the scroll cue sized instead of showing at its
+     un-set intrinsic SVG size. Values are literal, since the custom
+     properties in styles.css are not defined yet at this point. Belongs
+     to .hero-slides on the homepage only; harmless no-op elsewhere. -->
+<style>
+.hero-slides{position:relative;display:grid;place-items:center;min-height:70vh;overflow:hidden;background:#071634}
+.hero-slides__heading{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hero-slides__word{display:none}
+.hero-slides__slide{position:absolute;inset:0;opacity:0}
+.hero-slides__scroll{position:absolute;z-index:2;bottom:2rem;left:50%;transform:translateX(-50%);width:2.75rem;height:2.75rem}
+.hero-slides__scroll svg{width:1.1rem;height:1.1rem}
+</style>
+
 <title>${page.title}</title>
 <meta name="description" content="${page.description}">
 <link rel="canonical" href="${url}">
@@ -232,7 +263,7 @@ function layout(page, body, schema) {
 <link rel="apple-touch-icon" href="{{base}}assets/img/brand/apple-touch-icon.png">
 <link rel="manifest" href="{{base}}site.webmanifest">
 <link rel="preload" href="{{base}}assets/fonts/roboto-latin-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{{base}}assets/css/styles.css">
+<link rel="stylesheet" href="{{base}}assets/css/styles.css?v={{ver}}">
 <script>document.documentElement.className+=" js";</script>${schemaBlock}
 </head>
 
@@ -250,7 +281,7 @@ ${page.hideCta ? '' : ctaBand()}
 
 ${footer()}
 
-<script src="{{base}}assets/js/main.js" defer></script>
+<script src="{{base}}assets/js/main.js?v={{ver}}" defer></script>
 </body>
 </html>
 `;
@@ -415,6 +446,7 @@ for (const file of files) {
 
   const tokens = {
     '{{base}}': base,
+    '{{ver}}': ASSET_VER,
     '{{domain}}': cfg.domain,
     '{{phone1}}': cfg.phonePrimary.display,
     '{{phone1e}}': cfg.phonePrimary.e164,
