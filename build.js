@@ -231,6 +231,7 @@ function layout(page, body, schema) {
 <link rel="icon" href="{{base}}assets/img/brand/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="{{base}}assets/img/brand/apple-touch-icon.png">
 <link rel="manifest" href="{{base}}site.webmanifest">
+<link rel="preload" href="{{base}}assets/fonts/roboto-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{base}}assets/css/styles.css">
 <script>document.documentElement.className+=" js";</script>${schemaBlock}
 </head>

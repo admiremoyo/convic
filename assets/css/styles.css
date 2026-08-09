@@ -1,8 +1,28 @@
 /* ==========================================================================
    Covcro Electrical & Plumbing (Pvt) Ltd
    Brand palette taken from the company logo: royal blue + pink, with a
-   water-blue tertiary. Single stylesheet, no build step, no external fonts.
+   water-blue tertiary. Single stylesheet, no build step. The one webfont is
+   served from this repository, so the site still makes no third-party
+   requests at runtime.
    ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. Font
+   Roboto, latin subset, variable 400–700 in a single 42 KB file. The
+   reference site sets everything in Roboto; matching it in a system stack is
+   not possible, since the fallbacks differ per platform.
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fonts/roboto-latin-var.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+                 U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+                 U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF,
+                 U+FFFD;
+}
 
 /* --------------------------------------------------------------------------
    1. Tokens
@@ -25,17 +45,20 @@
   --aqua-500: #1e9cd7;   /* water drop blue */
   --aqua-50:  #e8f6fd;
 
-  /* Neutrals */
-  --ink:      #0d1526;
-  --body:     #46516b;
-  --muted:    #6b7793;
-  --line:     #e2e8f4;
+  /* Neutrals. Read off the reference rather than tinted towards the brand
+     blue: its text is near-black, its alternating band is a flat warm-free
+     grey and nothing in it carries a blue cast. */
+  --ink:      #0c0c0c;   /* headings */
+  --body:     #262626;   /* body copy */
+  --muted:    #5c5c5c;
+  --line:     #e5e5e5;
   --surface:  #ffffff;
-  --surface-2:#f5f7fc;
-  --surface-3:#eef2fa;
+  --surface-2:#f2f3f5;   /* the reference's alternating row background */
+  --surface-3:#e9eaec;
 
-  /* Type */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+  /* Type. The reference sets everything in Roboto; it is bundled in
+     assets/fonts rather than fetched from a font CDN at runtime. */
+  --font-sans: Roboto, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
                "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --font-display: var(--font-sans);
 
@@ -74,8 +97,8 @@ html {
 body {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: clamp(1rem, .96rem + .2vw, 1.0625rem);
-  line-height: 1.65;
+  font-size: 1rem;      /* reference: 16px at every breakpoint */
+  line-height: 1.8;     /* reference: 28.8px on 16px */
   color: var(--body);
   background: var(--surface);
   -webkit-font-smoothing: antialiased;
@@ -83,22 +106,25 @@ body {
   overflow-x: hidden;
 }
 
+/* Heading form is taken from the reference: weight 700 rather than 800,
+   no negative tracking, and a notably loose 1.4 leading. The previous
+   settings — 800 weight, -.022em, 1.12 leading — read as a much tighter,
+   more compressed page than the reference does. */
 h1, h2, h3, h4, h5 {
   margin: 0 0 .6em;
   color: var(--ink);
   font-family: var(--font-display);
-  font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -.022em;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: normal;
   text-wrap: balance;
 }
 
-/* Headings are descriptive rather than short slogans, so they are set a little
-   smaller than a display headline would be to keep line counts sane. */
-h1 { font-size: clamp(2rem, 1.3rem + 2.9vw, 3.4rem); }
-h2 { font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem); }
-h3 { font-size: clamp(1.25rem, 1.1rem + .7vw, 1.55rem); }
-h4 { font-size: 1.075rem; letter-spacing: -.01em; }
+/* Reference: h1 60px, h2 36px, card/sub headings 18px, all at 1.4. */
+h1 { font-size: clamp(2.25rem, 1.5rem + 2.6vw, 3.75rem); }
+h2 { font-size: clamp(1.75rem, 1.45rem + .95vw, 2.25rem); }
+h3 { font-size: 1.125rem; font-weight: 500; }
+h4 { font-size: 1rem; font-weight: 500; }
 
 p  { margin: 0 0 1.15rem; text-wrap: pretty; }
 p:last-child { margin-bottom: 0; }
@@ -210,16 +236,20 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   align-items: center;
   justify-content: center;
   gap: .6rem;
-  padding: 1rem 2rem;
+  /* Reference button: 114x63 from 17px/19.2px padding on 16px text at
+     weight 400 with no tracking. The previous rule set it smaller, bolder
+     and tracked out, which the reference does not do. */
+  padding: 17px 19px;
   border: 2px solid var(--btn-bd);
   border-radius: 0;
   background: var(--btn-bg);
   color: var(--btn-fg);
   font: inherit;
-  font-weight: 600;
-  font-size: .9rem;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.8;
   text-transform: uppercase;
-  letter-spacing: .05em;
+  letter-spacing: normal;
   text-decoration: none;
   cursor: pointer;
   white-space: nowrap;
@@ -253,8 +283,8 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .btn--wa { --btn-bg: #25d366; --btn-bd: #25d366; --btn-fg: #06331a; }
 .btn--wa:hover { --btn-bg: #1fbe5a; --btn-bd: #1fbe5a; }
 
-.btn--lg { padding: 1.15rem 2.5rem; font-size: .95rem; }
-.btn--sm { padding: .7rem 1.35rem; font-size: .8rem; }
+.btn--lg { padding: 21px 26px; font-size: 1rem; }
+.btn--sm { padding: 11px 14px; font-size: .875rem; }
 .btn--block { width: 100%; }
 
 .btn-row { display: flex; flex-wrap: wrap; gap: .85rem; }
@@ -359,8 +389,11 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   padding: .6rem .85rem;
   border-radius: var(--r-sm);
   color: var(--ink);
-  font-size: .94rem;
-  font-weight: 650;
+  /* Reference nav: 14px, weight 600, 1px tracking, uppercase. */
+  font-size: .875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   text-decoration: none;
   white-space: nowrap;
   transition: color .18s var(--ease), background-color .18s var(--ease);
@@ -1441,13 +1474,19 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 
 /* ==========================================================================
    21. Section heading, reference style
-   Large, bold, uppercase and centred.
+
+   Measured off the reference rather than judged by eye. Its lead is an
+   ordinary 16px paragraph in the brand colour with the words typed in
+   caps — not a tracked-out small label. Its heading is 36px at 500 on
+   desktop and grows to 48px on phones, which is the opposite of the usual
+   responsive direction and the main reason the previous sizing did not
+   look like the reference on either end.
    ========================================================================== */
 .head-lead {
   margin-bottom: .35rem;
-  font-size: 1.05rem;
-  font-weight: 500;
-  letter-spacing: .04em;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: normal;
   text-transform: uppercase;
   color: var(--blue-600);
   text-align: center;
@@ -1456,14 +1495,16 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   max-width: 22ch;
   margin-inline: auto;
   margin-bottom: clamp(2.25rem, 5vw, 3.5rem);
-  font-size: clamp(2.5rem, 1.4rem + 4.6vw, 4rem);
-  font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -.035em;
+  font-size: 3rem;      /* phones */
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: normal;
   text-align: center;
   color: var(--ink);
 }
-.head-big--upper { text-transform: uppercase; }
+@media (min-width: 600px) {
+  .head-big { font-size: 2.25rem; line-height: 1.4; }
+}
 .head-big + .head-sub {
   max-width: 60ch;
   margin: -2rem auto clamp(2.25rem, 5vw, 3.5rem);
@@ -1485,9 +1526,10 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   display: flex;
   flex-direction: column;
 }
+/* The reference's photo is a true square (363x363 in a 363-wide column). */
 .feature__media {
   position: relative;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   background: var(--surface-3);
 }
@@ -1498,40 +1540,44 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 }
 .feature:hover .feature__media img { transform: scale(1.04); }
 
+/* Panel geometry, measured on the reference at a 363px-wide column:
+   inset 20px from each side of the photo, overlapping its bottom edge by
+   27px, 30px of padding, and a single soft drop shadow. The previous
+   values overlapped by 52px and sat on a heavier two-layer shadow. */
 .feature__body {
   position: relative;
   z-index: 2;
-  margin: -3.25rem 1.5rem 0;
-  padding: 2.25rem 1.75rem 1.75rem;
+  margin: -1.7rem 1.25rem 0;
+  padding: 1.875rem;
   background: #fff;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .1);
   flex: 1;
 }
-@media (min-width: 560px) {
-  .feature__body { margin-inline: 2.25rem 2.25rem; padding: 2.5rem 2.25rem 2rem; }
-}
 
-/* The chip straddles the top edge of the panel, aligned to its text column. */
+/* The chip is centred on the panel's top edge — half above, half below —
+   and starts 30px in from the panel's left edge. */
 .feature__chip {
   position: absolute;
-  top: -1.6rem;
-  left: 1.75rem;
-  padding: .55rem 1rem;
+  top: -.8rem;
+  left: 1.875rem;
+  padding: 3px 6px;
   background: var(--blue-600);
   color: #fff;
-  font-size: .85rem;
-  font-weight: 600;
-  letter-spacing: .01em;
+  font-size: .7rem;
+  font-weight: 400;
+  line-height: 1.8;
+  letter-spacing: .04em;
   white-space: nowrap;
 }
-@media (min-width: 560px) { .feature__chip { left: 2.25rem; } }
 
+/* Reference card title: 18px, weight 400, 1.4 leading, #111. */
 .feature__body h3 {
   margin-bottom: .75rem;
-  font-size: clamp(1.25rem, 1.1rem + .5vw, 1.5rem);
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: -.015em;
+  font-size: 1.125rem;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: #111;
 }
 .feature__body p { color: var(--body); font-size: .98rem; margin-bottom: 1.1rem; }
 .feature__body ul { margin: 0 0 1.35rem; padding: 0; list-style: none; }
@@ -1574,6 +1620,8 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   .feature-list {
     margin-inline: calc(var(--gutter) * -1);
   }
-  .feature__media { aspect-ratio: 4 / 3; }
-  .feature__body { margin-inline: 1.25rem; }
+  /* The reference keeps the square crop on phones too; only the panel
+     inset narrows (24px against 20px at desktop widths). */
+  .feature__body { margin-inline: 1.5rem; }
+  .feature__chip { left: 1.875rem; }
 }
