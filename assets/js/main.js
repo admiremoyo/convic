@@ -108,6 +108,41 @@
   });
 
   /* ------------------------------------------------------------------
+     Hero slideshow
+     Cross-fades a photo and its matching word. Pauses while the tab is
+     hidden, and holds on the first slide for reduced-motion users.
+     ------------------------------------------------------------------ */
+  var heroEl = document.querySelector('.hero-slides');
+  if (heroEl) {
+    var slides = Array.prototype.slice.call(heroEl.querySelectorAll('.hero-slides__slide'));
+    var words = Array.prototype.slice.call(heroEl.querySelectorAll('.hero-slides__word span'));
+    var current = 0;
+    var timer = null;
+    var HOLD = 4500;
+
+    function showSlide(i) {
+      current = (i + slides.length) % slides.length;
+      slides.forEach(function (s, n) { s.classList.toggle('is-active', n === current); });
+      words.forEach(function (w, n) { w.classList.toggle('is-active', n === current); });
+    }
+
+    showSlide(0);
+
+    if (slides.length > 1 && !reduceMotion) {
+      var start = function () {
+        stop();
+        timer = setInterval(function () { showSlide(current + 1); }, HOLD);
+      };
+      var stop = function () { if (timer) { clearInterval(timer); timer = null; } };
+
+      start();
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) stop(); else start();
+      });
+    }
+  }
+
+  /* ------------------------------------------------------------------
      Scroll reveal
      ------------------------------------------------------------------ */
   var revealables = document.querySelectorAll('[data-reveal]');

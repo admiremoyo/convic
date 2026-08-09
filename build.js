@@ -48,7 +48,7 @@ const SERVICES = [
 function topbar() {
   return `<div class="topbar">
   <div class="wrap topbar__inner">
-    <ul class="topbar__list">
+    <ul class="topbar__list topbar__list--meta">
       <li>${icon.pin}${cfg.address.street}, ${cfg.address.city}</li>
       <li>${icon.clock}${cfg.hours.weekdays} · ${cfg.hours.saturday}</li>
     </ul>
