@@ -797,18 +797,13 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 }
 
 .gallery { display: grid; gap: clamp(.85rem, 1.6vw, 1.25rem); }
-.gallery--masonry {
+.gallery--tiles {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
-  grid-auto-rows: 12rem;
-  grid-auto-flow: dense;   /* fill the holes that tall/wide spans leave behind */
 }
-.gallery--masonry .g-item { grid-row: span 1; }
-.gallery--masonry .g-item--tall { grid-row: span 2; }
-.gallery--masonry .g-item--wide { grid-column: span 2; }
-@media (max-width: 640px) {
-  .gallery--masonry .g-item--wide { grid-column: span 1; }
-  .gallery--masonry { grid-auto-rows: 10rem; }
-}
+/* One tile shape for every photo. The source images run from 3:4 portrait to
+   16:9 landscape, and a square is the shape that crops the least off the worst
+   case in either direction. Change this one value to reshape every gallery. */
+.gallery--tiles .g-item { aspect-ratio: 1 / 1; }
 
 .g-item {
   position: relative;
